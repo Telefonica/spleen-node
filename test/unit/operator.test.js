@@ -95,6 +95,12 @@ describe('Operator', () => {
       assert.isFalse(result);
     });
 
+    it('should be false on in undefined', () => {
+      const op = Operator.in;
+      const result = op.match(42, undefined);
+      assert.isFalse(result);
+    });
+
     it('should be true on nin match', () => {
       const op = Operator.nin;
       const result = op.match(42, [1, 2, 3]);
@@ -104,6 +110,12 @@ describe('Operator', () => {
     it('should be false on nin miss', () => {
       const op = Operator.nin;
       const result = op.match(42, [1, 2, 42, 3]);
+      assert.isFalse(result);
+    });
+
+    it('should be false on nin undefined', () => {
+      const op = Operator.nin;
+      const result = op.match(42, undefined);
       assert.isFalse(result);
     });
 

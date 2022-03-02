@@ -2,7 +2,7 @@
   "name": "@telefonica/spleen",
   "longName": "spleen",
   "description": "Dynamic filter expression parsing, formatting, and abstractions for web APIs.",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "dependencies": {
     "elv": "^2.0.0"
   },
