@@ -1362,7 +1362,7 @@ describe('Parser', () => {
     });
 
     it('should match false on isRegex', () => {
-      const parser = new Parser('/foo like "\\w"');
+      const parser = new Parser('/corge like "[^a-z]{1}"');
       const filter = parser.parse().value;
       assert.isFalse(filter.match(src, true));
     });
