@@ -99,9 +99,17 @@ describe('Parser', () => {
       assert.strictEqual(filter.statements[0].value.operator, Operator.lte);
     });
 
-    it('should parse in operator', () => {
+    it('should parse in operator with literal', () => {
       const parser = new Parser('/foo in [1, 2, 3]');
       const filter = parser.parse().value;
+      assert.strictEqual(filter.statements[0].value.operator, Operator.in);
+    });
+
+    it('should parse in operator with target', () => {
+      const parser = new Parser('/foo in /bar');
+      const filter = parser.parse().value;
+      const object = filter.statements[0].value.object;
+      assert.instanceOf(object, Target);
       assert.strictEqual(filter.statements[0].value.operator, Operator.in);
     });
 
