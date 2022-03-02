@@ -99,9 +99,17 @@ describe('Parser', () => {
       assert.strictEqual(filter.statements[0].value.operator, Operator.lte);
     });
 
-    it('should parse in operator', () => {
+    it('should parse in operator with literal', () => {
       const parser = new Parser('/foo in [1, 2, 3]');
       const filter = parser.parse().value;
+      assert.strictEqual(filter.statements[0].value.operator, Operator.in);
+    });
+
+    it('should parse in operator with target', () => {
+      const parser = new Parser('/foo in /bar');
+      const filter = parser.parse().value;
+      const object = filter.statements[0].value.object;
+      assert.instanceOf(object, Target);
       assert.strictEqual(filter.statements[0].value.operator, Operator.in);
     });
 
@@ -1345,6 +1353,18 @@ describe('Parser', () => {
       const parser = new Parser('/foo eq 1 and (/corge eq 1 or /bar eq 2)');
       const filter = parser.parse().value;
       assert.isTrue(filter.match(src));
+    });
+
+    it('should match true on isRegex', () => {
+      const parser = new Parser('/corge like "[a-z]{1}"');
+      const filter = parser.parse().value;
+      assert.isTrue(filter.match(src, true));
+    });
+
+    it('should match false on isRegex', () => {
+      const parser = new Parser('/corge like "[^a-z]{1}"');
+      const filter = parser.parse().value;
+      assert.isFalse(filter.match(src, true));
     });
   });
 
